@@ -1,0 +1,14 @@
+{
+  "name": "persona5",
+  "version": "1.0.0",
+  "description": "### I have an outline for an application using node, react, deck.gl, three.js, postgres with the postgis extension.",
+  "main": "index.js",
+  "scripts": {
+    "lint:server": "eslint ./server --ext .js,.jsx",
+    "lint:client": "eslint ./client --ext .js,.jsx",
+    "lint": "npm run lint:server && npm run lint:client"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
