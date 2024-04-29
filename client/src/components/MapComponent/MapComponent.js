@@ -8,10 +8,8 @@ import { ScenegraphLayer } from "@deck.gl/mesh-layers";
 import Modal from "../Modal/Modal";
 import styles from "./MapComponent.module.css";
 
-const MapComponent = ({ initialViewState, pois }) => {
-  const [viewState, setViewState] = useState(initialViewState);
+const MapComponent = ({ viewState, setViewState, pois }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  console.log("pois", pois);
 
   const layers = [
     new ScatterplotLayer({
@@ -30,7 +28,7 @@ const MapComponent = ({ initialViewState, pois }) => {
       </div>
 
       <DeckGL
-        initialViewState={initialViewState}
+        initialViewState={viewState}
         viewState={viewState}
         controller={true}
         onViewStateChange={({ viewState }) => setViewState(viewState)}

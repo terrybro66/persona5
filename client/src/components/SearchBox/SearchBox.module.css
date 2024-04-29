@@ -1,0 +1,12 @@
+.searchBox {
+  height: auto; /* This will be overridden by JavaScript */
+  overflow: hidden; /* This will hide the content that exceeds the max-height */
+  padding: 12px;
+  transition: max-height 0.2s ease-out; /* This will animate the max-height */
+  max-height: 1000px; /* This is the maximum height the box can expand to */
+  background-color: #fff;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  z-index: 20;
+}

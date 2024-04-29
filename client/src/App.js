@@ -1,11 +1,32 @@
 // src/App.js
 import React, { useEffect, useState } from "react";
+import { FlyToInterpolator } from "deck.gl";
+
 import MapComponent from "./components/MapComponent/MapComponent";
+import SearchBox from "./components/SearchBox/SearchBox";
 import "./App.css";
 
 function App() {
   const [pointsOfInterest, setPointsOfInterest] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [viewState, setViewState] = useState({
+    longitude: 139.75,
+    latitude: 35.66,
+    zoom: 10,
+    pitch: 0,
+    bearing: 0,
+  });
+
+  const handleFlyTo = (poi) => {
+    setViewState({
+      ...viewState,
+      longitude: poi.longitude,
+      latitude: poi.latitude,
+      zoom: 12,
+      transitionInterpolator: new FlyToInterpolator(),
+      transitionDuration: 1500,
+    });
+  };
 
   useEffect(() => {
     const fetchPointsOfInterest = async () => {
@@ -18,14 +39,6 @@ function App() {
     fetchPointsOfInterest();
   }, []);
 
-  const initialViewState = {
-    longitude: 139.75,
-    latitude: 35.66,
-    zoom: 15,
-    pitch: 0,
-    bearing: 0,
-  };
-
   const mapStyle = "mapbox://styles/mapbox/streets-v11";
   if (isLoading) {
     return <div>Loading...</div>;
@@ -33,8 +46,10 @@ function App() {
 
   return (
     <div className="App">
+      <SearchBox pointsOfInterest={pointsOfInterest} flyTo={handleFlyTo} />
       <MapComponent
-        initialViewState={initialViewState}
+        viewState={viewState}
+        setViewState={setViewState}
         mapStyle={mapStyle}
         pois={pointsOfInterest}
       />
