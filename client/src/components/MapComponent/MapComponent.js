@@ -8,11 +8,20 @@ import { ScenegraphLayer } from "@deck.gl/mesh-layers";
 import Modal from "../Modal/Modal";
 import styles from "./MapComponent.module.css";
 
-const MapComponent = ({ initialViewState }) => {
+const MapComponent = ({ initialViewState, pois }) => {
   const [viewState, setViewState] = useState(initialViewState);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  console.log("pois", pois);
 
-  const layers = [];
+  const layers = [
+    new ScatterplotLayer({
+      id: "scatterplot-layer",
+      data: pois,
+      getPosition: (d) => [d.longitude, d.latitude],
+      getRadius: 1000, // adjust as needed
+      getFillColor: [255, 140, 0], // orange
+    }),
+  ];
 
   return (
     <div>
