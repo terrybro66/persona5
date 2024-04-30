@@ -8,7 +8,7 @@ import { ScenegraphLayer } from "@deck.gl/mesh-layers";
 import Modal from "../Modal/Modal";
 import styles from "./MapComponent.module.css";
 
-const MapComponent = ({ viewState, setViewState, pois }) => {
+const MapComponent = ({ viewState, setViewState, pois, controller }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const layers = [
@@ -30,7 +30,7 @@ const MapComponent = ({ viewState, setViewState, pois }) => {
       <DeckGL
         initialViewState={viewState}
         viewState={viewState}
-        controller={true}
+        controller={controller}
         onViewStateChange={({ viewState }) => setViewState(viewState)}
         layers={layers}
       >

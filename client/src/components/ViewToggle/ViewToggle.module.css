@@ -1,0 +1,6 @@
+.viewToggle {
+  position: absolute;
+  left: 20%;
+  top: 30%;
+  z-index: 30;
+}
