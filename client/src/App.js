@@ -4,6 +4,7 @@ import { FlyToInterpolator } from "deck.gl";
 
 import MapComponent from "./components/MapComponent/MapComponent";
 import SearchBox from "./components/SearchBox/SearchBox";
+import ViewToggle from "./components/ViewToggle/ViewToggle";
 import "./App.css";
 
 function App() {
@@ -12,10 +13,11 @@ function App() {
   const [viewState, setViewState] = useState({
     longitude: 139.75,
     latitude: 35.66,
-    zoom: 10,
-    pitch: 0,
+    zoom: 50,
+    pitch: 90,
     bearing: 0,
   });
+  const [isControllerEnabled, setIsControllerEnabled] = useState(true);
 
   const handleFlyTo = (poi) => {
     setViewState({
@@ -39,6 +41,17 @@ function App() {
     fetchPointsOfInterest();
   }, []);
 
+  const toggleController = () => {
+    setIsControllerEnabled((prevIsControllerEnabled) => {
+      const newIsControllerEnabled = !prevIsControllerEnabled;
+      setViewState((prevState) => ({
+        ...prevState,
+        pitch: newIsControllerEnabled ? 0 : 90,
+      }));
+      return newIsControllerEnabled;
+    });
+  };
+
   const mapStyle = "mapbox://styles/mapbox/streets-v11";
   if (isLoading) {
     return <div>Loading...</div>;
@@ -47,11 +60,16 @@ function App() {
   return (
     <div className="App">
       <SearchBox pointsOfInterest={pointsOfInterest} flyTo={handleFlyTo} />
+      <ViewToggle
+        isControllerEnabled={isControllerEnabled}
+        toggleController={toggleController}
+      />
       <MapComponent
         viewState={viewState}
         setViewState={setViewState}
         mapStyle={mapStyle}
         pois={pointsOfInterest}
+        controller={isControllerEnabled}
       />
     </div>
   );
